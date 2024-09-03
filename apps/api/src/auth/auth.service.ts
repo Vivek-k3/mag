@@ -7,14 +7,13 @@ import { AuthLog, AuthLogDocument } from './schemas/log.schema';
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel('AuthLog')
+    @InjectModel('AuthLog', 'auth')
     private readonly authLogModel: Model<AuthLogDocument>,
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-    
   ) {}
-  
-  async login(email:string): Promise<{ accessToken: string }> {
+
+  async login(email: string): Promise<{ accessToken: string }> {
     const user = await this.userService.findByEmail(email);
     if (user) {
       const payload = { userId: user?.userId, email: user?.email };
@@ -41,15 +40,17 @@ export class AuthService {
     }
     return null;
   }
-  
-  
-  
-  async logger (payload: any, ip: string, userAgent: string) {
+
+  async logger(payload: any, ip: string, userAgent: string) {
     const log = {
       payload: payload,
       ip,
-      userAgent
+      userAgent,
     };
     await this.authLogModel.create(log);
+  }
+
+  async createUser(userPayload) {
+    return await this.userService.create(userPayload);
   }
 }

@@ -1,11 +1,7 @@
 {
   "name": "v1",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "apps/*",
-    "tooling/*"
-  ],
+  "workspaces": ["packages/*", "apps/*", "tooling/*"],
   "scripts": {
     "b": "bun clean && bun install",
     "build": "turbo build",
@@ -31,9 +27,5 @@
     "typescript": "^5.5.4"
   },
   "packageManager": "bun@1.1.26",
-  "trustedDependencies": [
-    "@biomejs/biome",
-    "@sentry/cli",
-    "protobufjs"
-  ]
+  "trustedDependencies": ["@biomejs/biome", "@sentry/cli", "protobufjs"]
 }

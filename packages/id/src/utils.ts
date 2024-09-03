@@ -27,7 +27,11 @@ function base(ALPHABET: string) {
   function encode(source: Uint8Array | ArrayBuffer | number[]): string {
     if (!(source instanceof Uint8Array)) {
       if (ArrayBuffer.isView(source)) {
-        source = new Uint8Array(source.buffer, source.byteOffset, source.byteLength);
+        source = new Uint8Array(
+          source.buffer,
+          source.byteOffset,
+          source.byteLength,
+        );
       } else if (Array.isArray(source)) {
         source = Uint8Array.from(source);
       } else {
@@ -55,9 +59,13 @@ function base(ALPHABET: string) {
     while (pbegin !== pend) {
       let carry = source[pbegin];
       let i = 0;
-      for (let it1 = size - 1; (carry !== 0 || i < length) && it1 !== -1; it1--, i++) {
+      for (
+        let it1 = size - 1;
+        (carry !== 0 || i < length) && it1 !== -1;
+        it1--, i++
+      ) {
         carry += (256 * b58[it1]) >>> 0;
-        b58[it1] = carry % BASE >>> 0;
+        b58[it1] = (carry % BASE) >>> 0;
         carry = (carry / BASE) >>> 0;
       }
 
@@ -109,9 +117,13 @@ function base(ALPHABET: string) {
       }
 
       let i = 0;
-      for (let it3 = size - 1; (carry !== 0 || i < length) && it3 !== -1; it3--, i++) {
+      for (
+        let it3 = size - 1;
+        (carry !== 0 || i < length) && it3 !== -1;
+        it3--, i++
+      ) {
         carry += (BASE * b256[it3]) >>> 0;
-        b256[it3] = carry % 256 >>> 0;
+        b256[it3] = (carry % 256) >>> 0;
         carry = (carry / 256) >>> 0;
       }
 

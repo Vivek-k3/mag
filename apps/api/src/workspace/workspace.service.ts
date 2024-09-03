@@ -5,18 +5,17 @@ import { Model } from 'mongoose';
 @Injectable()
 export class WorkspaceService {
   constructor(
-    @InjectModel('Workspace')
+    @InjectModel('Workspace', 'space')
     private readonly workspaceModel: Model<WorkspaceDocument>,
   ) {}
   create(workspace: WorkspaceDocument) {
     return this.workspaceModel.create(workspace);
   }
   findAll(userId: string) {
-    console.log("userId",userId)
-    return this.workspaceModel.find({userId: userId}).exec();
+    console.log('userId', userId);
+    return this.workspaceModel.find({ userId: userId }).exec();
   }
   findById(id: string) {
-    return this.workspaceModel.find({workspaceId: id}).exec();
+    return this.workspaceModel.find({ workspaceId: id }).exec();
   }
-  
 }

@@ -7,13 +7,13 @@ import { AuthService } from '../auth.service';
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(private authService: AuthService) {
     super({
-      clientID:
-        '1068495933323-rlkjir4cod6lt08f1c8uodaa6j2kcai1.apps.googleusercontent.com',
-      clientSecret: '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',
-      //   callbackURL: 'https://api.metaphy.ai/salescopilot/auth/google/callback',
-      callbackURL: 'http://localhost:9000/auth/google/callback',
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
       // passReqToCallback: true,
-      scope: ['profile', 'email', 'https://www.googleapis.com/auth/drive'],
+      scope: ['profile', 'email'],
+      access_type: 'offline',
+      prompt: 'consent',
     });
   }
 
@@ -23,26 +23,40 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: any,
     done: VerifyCallback,
   ): Promise<any> {
-    const email = profile?.emails?.[0]?.value;
-    const firstName =
-      profile?.name?.givenName || profile?.displayName?.split(' ')[0];
-    const lastName =
-      profile?.name?.familyName ||
-      profile?.displayName?.split(' ').slice(1).join(' ');
-    const picture = profile?.photos?.[0]?.value;
+    try {
+      console.log('Validating user...');
+      console.log('Profile:', profile);
+      if (!profile) {
+        return done(new Error('Profile is undefined'), null);
+      }
+      const email = profile?.emails?.[0]?.value;
+      if (!email) {
+        return done(new Error('No email found'), null);
+      }
 
-    if (!email) {
-      return done(new Error('No email found'), null);
+      const firstName =
+        profile?.name?.givenName || profile?.displayName?.split(' ')[0];
+      const lastName =
+        profile?.name?.familyName ||
+        profile?.displayName?.split(' ').slice(1).join(' ');
+      const picture = profile?.photos?.[0]?.value;
+      const phone = profile?.phoneNumber;
+      const userPayload = {
+        email,
+        emailConfirmedAt: new Date(),
+        firstName,
+        lastName,
+        avatar: picture,
+        accessToken,
+        phone,
+      };
+
+      // await this.authService.createUser(userPayload);
+
+      done(null, userPayload);
+    } catch (error) {
+      console.error('Error in validate method:', error);
+      done(error, null);
     }
-
-    const user = {
-      email,
-      firstName,
-      lastName,
-      picture,
-      accessToken,
-    };
-
-    done(null, user);
   }
 }

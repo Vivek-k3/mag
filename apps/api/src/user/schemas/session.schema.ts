@@ -1,13 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { IsOptional, IsString, IsArray, IsEnum } from 'class-validator';
-import { newId } from '@v1/id';
-import { v4 as uuidv4 } from 'uuid';
+import { newKey } from '@v1/id';
 export type SessionDocument = mongoose.HydratedDocument<Session>;
 
 @Schema()
 export class Session {
-  @Prop({ required: true, unique: true, default: uuidv4() })
+  @Prop({
+    required: true,
+    unique: true,
+    default: newKey({ prefix: '', byteLength: 12 }),
+  })
   sessionId: string;
 
   @Prop({ required: true })

@@ -5,7 +5,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { WorkspaceSchema } from './schemas/workspace.schema';
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'Workspace', schema: WorkspaceSchema }]),
+    MongooseModule.forFeature(
+      [{ name: 'Workspace', schema: WorkspaceSchema }],
+      'space',
+    ),
   ],
   controllers: [WorkspaceController],
   providers: [WorkspaceService],

@@ -4,17 +4,20 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 @Injectable()
 export class ChatService {
-  constructor( @InjectModel('Chat') private readonly chatModel: Model<ChatDocument>) {}
-  
+  constructor(
+    @InjectModel('Chat', 'chat')
+    private readonly chatModel: Model<ChatDocument>,
+  ) {}
+
   create(chat: ChatDocument) {
     return this.chatModel.create(chat);
   }
 
   findAll(userId: string) {
-    return this.chatModel.find({userId}).exec();
+    return this.chatModel.find({ userId }).exec();
   }
 
   findById(id: string) {
-    return this.chatModel.find({chatId: id}).exec();
+    return this.chatModel.find({ chatId: id }).exec();
   }
 }

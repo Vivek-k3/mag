@@ -1,5 +1,4 @@
-import { Controller, Post, Body, Get, Query, Param } from '@nestjs/common';
-import { CreateWorkspaceDto } from './dto/create.workspace.dto';
+import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { WorkspaceService } from './workspace.service';
 
 @Controller('workspace')

@@ -1,19 +1,19 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
-import { IsOptional, IsString, IsArray, IsEnum } from 'class-validator';
-import { newId } from '@v1/id';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import * as mongoose from "mongoose";
+import { IsOptional, IsString, IsArray, IsEnum } from "class-validator";
+import { newId } from "@v1/id";
 
 export type MessageDocument = mongoose.HydratedDocument<Message>;
 
 // Enum for message types
 export enum MessageType {
-  TEXT = 'text',
-  IMAGE = 'image',
-  VIDEO = 'video',
-  FILE = 'file',
-  POLL = 'poll',
-  EVENT = 'event',
-  DOCUMENT = 'document',
+  TEXT = "text",
+  IMAGE = "image",
+  VIDEO = "video",
+  FILE = "file",
+  POLL = "poll",
+  EVENT = "event",
+  DOCUMENT = "document",
 }
 
 @Schema()
@@ -56,13 +56,13 @@ export class Message {
     default: newId("message", 12),
   })
   messageId: string;
-  
+
   @Prop({ required: true })
   messageFrom: string;
-  
+
   @Prop({ required: true })
   botId?: string;
-  
+
   @Prop({ required: false })
   userId?: string;
 

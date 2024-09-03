@@ -4,7 +4,7 @@
   "compilerOptions": {
     "types": ["node"],
     "module": "ESNext",
-    "lib":[ "dom"],
+    "lib": ["dom"],
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,

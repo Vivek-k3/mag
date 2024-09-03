@@ -6,7 +6,7 @@ const prefixes = {
   key: "key",
   chat: "c",
   message: "m",
-  chatbot:"botc",
+  chatbot: "botc",
   policy: "pol",
   api: "api",
   request: "req",

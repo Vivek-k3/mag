@@ -8,19 +8,25 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel('User')
+    @InjectModel('User', 'auth')
     private readonly userModel: Model<UserDocument>,
     private jwtService: JwtService,
   ) {}
   async create(createUserDto: any) {
     const { email } = createUserDto;
-    const userData: any = this.userModel.findOne({ email });
+    const userData = await this.userModel.findOne({ email });
     if (userData) {
-      throw new ConflictException('user is already exist!');
+      throw new ConflictException('User already exists!');
     }
-    const password = await bcrypt.hash(createUserDto.password, 10);
-    const userId = uuidv4();
-    const data = { ...createUserDto, password, userId };
+
+    let data: any;
+
+    if (createUserDto.password) {
+      const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+      data = { ...createUserDto, password: hashedPassword };
+    } else {
+      data = { ...createUserDto };
+    }
     const createdUser = await this.userModel.create(data);
     return createdUser;
   }

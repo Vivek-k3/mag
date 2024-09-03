@@ -1,9 +1,23 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import {IsString, IsNotEmpty, IsEmail, IsDate, IsNumber, IsBoolean, IsArray, IsObject, IsBase64, IsUrl, ValidateNested, Matches, MaxLength, MinLength} from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsEmail,
+  IsDate,
+  IsNumber,
+  IsBoolean,
+  IsArray,
+  IsObject,
+  IsBase64,
+  IsUrl,
+  ValidateNested,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export type AccountDocument = HydratedDocument<Account>;
-
 
 // Account model
 @Schema()
@@ -37,7 +51,6 @@ export class Account {
 
   @Prop()
   id_token: string;
-
 
   @Prop({ default: () => new Date() })
   createdAt: Date;

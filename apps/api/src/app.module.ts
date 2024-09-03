@@ -15,7 +15,15 @@ import { UserModule } from './user/user.module';
     WorkspaceModule,
     ChatModule,
     MessageModule,
-    MongooseModule.forRoot(process.env.MONGODB_URI),
+    MongooseModule.forRoot(process.env.MONGODB_URI + '/auth', {
+      connectionName: 'auth',
+    }),
+    MongooseModule.forRoot(process.env.MONGODB_URI + '/chat', {
+      connectionName: 'chat',
+    }),
+    MongooseModule.forRoot(process.env.MONGODB_URI + '/chatbot', {
+      connectionName: 'space',
+    }),
     ChatbotModule,
     AuthModule,
     OrganisationModule,

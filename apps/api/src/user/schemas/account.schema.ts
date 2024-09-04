@@ -20,19 +20,19 @@ import {
 export type AccountDocument = HydratedDocument<Account>;
 
 // Account model
-@Schema()
+@Schema({ timestamps: true })
 export class Account {
   @Prop({ required: true })
   userId: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   type: string;
 
   @Prop({ required: true })
   provider: string;
 
   @Prop({ required: true })
-  providerAccountId: string;
+  provider_account_id: string;
 
   @Prop()
   refresh_token: string;
@@ -41,22 +41,22 @@ export class Account {
   access_token: string;
 
   @Prop()
-  expires_at: number;
+  expires_in: number;
 
   @Prop()
   token_type: string;
 
   @Prop()
-  scope: string;
+  scopes: string[];
 
   @Prop()
   id_token: string;
 
-  @Prop({ default: () => new Date() })
-  createdAt: Date;
+  @Prop({ type: Map, of: Object })
+  metadata: Record<string, any>;
 
   @Prop({ default: () => new Date() })
-  updatedAt: Date;
+  last_sign_in_at: Date;
 }
 
 export const AccountSchema = SchemaFactory.createForClass(Account);

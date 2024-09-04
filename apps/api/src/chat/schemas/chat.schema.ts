@@ -61,14 +61,9 @@ export class Chat {
   @Prop({ required: true, default: [] })
   isSharedWith: string[];
 
-  @Prop({ required: true, default: [] })
-  isSharedWithMe: string[];
 
-  @Prop({ required: true, default: [] })
-  isSharedWithOthers: string[];
-
-  @Prop({ required: true, default: [] })
-  isSharedWithEveryone: string[];
+  @Prop({ required: true, default: false })
+  isSharedWithEveryone: boolean;
 }
 
 export const ChatSchema = SchemaFactory.createForClass(Chat);

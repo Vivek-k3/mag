@@ -1,18 +1,18 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import * as mongoose from "mongoose";
-import { IsOptional, IsString } from "class-validator";
-import { newId } from "@v1/id";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
+import { IsOptional, IsString } from 'class-validator';
+import { newKey } from '@v1/id';
 export type WorkspaceDocument = mongoose.HydratedDocument<Workspace>;
 
 @Schema()
 export class Workspace {
-  @Prop({ required: true, default: "Default Workspace" })
+  @Prop({ required: true, default: 'Default Workspace' })
   name: string;
 
   @Prop({
     required: true,
     unique: true,
-    default: () => newId("workspace", 6),
+    default: newKey({ prefix: 'ws', byteLength: 8 }),
   })
   workspaceId: string;
 
@@ -25,7 +25,7 @@ export class Workspace {
   // @Prop({ required: true })
   // description: string;
 
-  @Prop({ required: true, default: "You" })
+  @Prop({ required: true, default: 'You' })
   owner: string;
 
   @Prop({ required: true, default: () => new Date() })

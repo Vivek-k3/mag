@@ -3,34 +3,34 @@ import * as mongoose from 'mongoose';
 import { newKey } from '@v1/id';
 export type SessionDocument = mongoose.HydratedDocument<Session>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Session {
   @Prop({
     required: true,
     unique: true,
-    default: newKey({ prefix: '', byteLength: 12 }),
+    default: newKey({ prefix: '', byteLength: 32 }),
   })
   sessionId: string;
 
   @Prop({ required: true })
-  userId: string;
+  email: string;
 
   @Prop({ required: true })
+  access_token: string;
+
+  @Prop({ required: true })
+  userId: string;
+
+  @Prop({ required: false })
   ip: string;
 
   @Prop({ required: true })
-  userAgent: string;
+  user_agent: string;
 
   @Prop({ required: true })
-  createdAt: Date;
+  refreshed_at: Date;
 
-  @Prop({ required: true })
-  updatedAt: Date;
-
-  @Prop({ required: true })
-  refreshedAt: Date;
-
-  @Prop({ required: true })
+  @Prop({ required: false })
   tag: string;
 }
 

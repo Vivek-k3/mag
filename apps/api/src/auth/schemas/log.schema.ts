@@ -4,7 +4,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type AuthLogDocument = HydratedDocument<AuthLog>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class AuthLog {
   @Prop({
     required: true,
@@ -22,8 +22,6 @@ export class AuthLog {
   @Prop({ required: true })
   userAgent: string;
 
-  @Prop({ required: true, default: () => new Date() })
-  createdAt: Date;
 }
 
 export const AuthLogSchema = SchemaFactory.createForClass(AuthLog);

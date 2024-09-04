@@ -227,12 +227,12 @@ class KeyV1 {
   }
 }
 
-export async function newKey(opts: KeyOptions): Promise<string> {
+export  function newKey(opts: KeyOptions){
   const key = new KeyV1({
     byteLength: opts.byteLength,
     prefix: opts.prefix,
   }).toString();
 
-  const hash = await sha256(key); // You can use this if needed
-  return key;
+  const hash =  sha256(key); // You can use this if needed
+  return key as string;
 }

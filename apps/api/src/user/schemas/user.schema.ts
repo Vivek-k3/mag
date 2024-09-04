@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { IsOptional, IsString, IsArray, IsEnum } from 'class-validator';
+import { IsOptional } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 export type UserDocument = mongoose.HydratedDocument<User>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class User {
   @Prop({ required: true, unique: true, default: uuidv4() })
   userId: string;
@@ -12,12 +12,12 @@ export class User {
   @Prop({ required: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   password: string;
 
   @Prop({ required: false })
   @IsOptional()
-  emailConfirmedAt: Date;
+  email_confirmed_at: Date;
 
   @Prop({ required: false })
   @IsOptional()
@@ -42,10 +42,10 @@ export class User {
   recoverySentAt: Date;
 
   @Prop({ required: false })
-  lastSignInAt: Date;
+  last_sign_in_at: Date;
 
   @Prop({ required: false })
-  providers: string;
+  providers: string[];
 
   @Prop({ required: false })
   phone: string;
@@ -62,17 +62,15 @@ export class User {
   @Prop({ required: true })
   avatar: string;
 
+  @Prop({ required: false })
+  orgId: string;
+
   @Prop({ required: true, default: true })
   isActive: boolean;
 
   @Prop({ required: true, default: false })
   isDeleted: boolean;
 
-  @Prop({ required: true, default: () => new Date() })
-  createdAt: Date;
-
-  @Prop({ required: true, default: () => new Date() })
-  updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

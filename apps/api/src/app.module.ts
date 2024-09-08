@@ -9,6 +9,7 @@ import { ChatbotModule } from './chatbot/chatbot.module';
 import { AuthModule } from './auth/auth.module';
 import { OrganisationModule } from './organisation/organisation.module';
 import { UserModule } from './user/user.module';
+import { EmailModule } from './email/email.module';
 // console.log(process.env);
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     OrganisationModule,
     UserModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

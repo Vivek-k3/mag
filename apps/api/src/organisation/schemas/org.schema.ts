@@ -4,7 +4,7 @@ import { newKey } from '@v1/id';
 
 export type OrgDocument = mongoose.HydratedDocument<Org>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Org {
   @Prop({
     required: true,
@@ -16,29 +16,25 @@ export class Org {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   description: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   avatar: string;
 
   @Prop({ required: true })
-  ownerId: string;
+  ownerIds: string[];
 
   @Prop({ required: true })
   members: string[];
 
+  @Prop({ required: true })
+  domain: string;
 
   @Prop({ required: true, default: false })
   isDeleted: boolean;
 
-  @Prop({ required: true, default: () => new Date() })
-  createdAt: Date;
-
-  @Prop({ required: true, default: () => new Date() })
-  updatedAt: Date;
-
-  @Prop({ required: true, default: () => new Date() })
+  @Prop({ required: false })
   deletedAt: Date;
 }
 

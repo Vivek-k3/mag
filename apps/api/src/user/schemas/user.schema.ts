@@ -65,12 +65,12 @@ export class User {
   @Prop({ required: false })
   orgId: string;
 
+
   @Prop({ required: true, default: true })
   isActive: boolean;
 
   @Prop({ required: true, default: false })
   isDeleted: boolean;
-
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

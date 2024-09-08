@@ -114,13 +114,20 @@ export class AuthService {
   }
 
   async signIn(provider, payload) {
-    const user = await this.userService.findByEmail(payload.email);
+    const { userId, email, ip, user_agent } = payload;
+    const user = await this.userService.findByEmail(email);
+
     if (user) {
-      const payload = { userId: user?.userId, email: user?.email };
       console.log(`User: ${user}`);
       console.log(`payload: ${JSON.stringify(payload)}`);
+      const session = await this.createSession({
+        userId: user?.userId,
+        email: user?.email,
+        ip,
+        user_agent,
+      });
       return {
-        accessToken: this.jwtService.sign(payload),
+        accessToken: this.jwtService.sign({ userId, email }),
         ...payload,
       };
     }
@@ -163,7 +170,6 @@ export class AuthService {
       console.log(
         `Generated access token for user ID ${userId}: ${access_token}`,
       );
-
 
       // Create the session in the database
       const session = await this.sessionModel.create({

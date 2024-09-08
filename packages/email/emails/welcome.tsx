@@ -17,7 +17,7 @@ const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3001";
 
-export default function WelcomeEmail() {
+export function WelcomeEmail(name: string, email: string) {
   return (
     <Html>
       <Preview>Welcome</Preview>
@@ -26,10 +26,10 @@ export default function WelcomeEmail() {
           <Container className="border-transparent my-[40px] mx-auto max-w-[600px]">
             <Logo baseUrl={baseUrl} />
             <Heading className="font-normal text-center p-0 my-[30px] mx-0">
-              Welcome to v1
+              Welcome to Mag
             </Heading>
             <Section className="mb-4">
-              Hi, I'm Pontus, one of the founders.
+              Hello {name},
             </Section>
             <Section className="mb-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -50,6 +50,7 @@ export default function WelcomeEmail() {
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
+              {email}
             </Section>
             <Section className="mb-6">
               <Link href={baseUrl}>

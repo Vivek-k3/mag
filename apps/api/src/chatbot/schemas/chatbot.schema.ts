@@ -5,7 +5,7 @@ import { newId } from '@v1/id';
 
 export type ChatbotDocument = HydratedDocument<Chatbot>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Chatbot {
   @Prop({ required: true, default: 'New Chatbot' })
   name: string;
@@ -22,8 +22,8 @@ export class Chatbot {
   @Prop({ required: true })
   userId: string;
 
-  @Prop({ required: true })
-  workspaceId: string;
+  // @Prop({ required: true })
+  // workspaceId: string;
 
   @Prop({ required: true, default: 'You are a helpful assistant.' })
   botPrompt: string;
@@ -34,14 +34,11 @@ export class Chatbot {
   @Prop({ required: true, default: false })
   isDeleted: boolean;
 
-  @Prop({ required: true, default: () => new Date() })
-  createdAt: Date;
-
-  @Prop({ required: true, default: () => new Date() })
-  updatedAt: Date;
-
   @Prop({})
   deletedAt?: Date;
+
+  @Prop({ required: false, default: false })
+  isSharedWithOrg: boolean;
 }
 
 export const ChatbotSchema = SchemaFactory.createForClass(Chatbot);

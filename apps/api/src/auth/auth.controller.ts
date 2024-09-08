@@ -4,7 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Req, UseGuards, Res } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { Response } from 'express';
-
+import * as cookieParser from 'cookie-parser';
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -22,6 +22,9 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   async googleAuthCallback(@Req() req, @Res() res: Response) {
     const { user, query, headers } = req;
+    const cookies = req.cookies;
+    const sessionData = cookies['sessionData'];
+    console.log('cookies', cookies);
     const user_agent = headers['user-agent'];
     const ip = headers['x-forwarded-for'] || headers['x-real-ip'];
     const code = query['code'];

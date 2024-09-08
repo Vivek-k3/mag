@@ -1,21 +1,21 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import * as mongoose from "mongoose";
-import { IsOptional, IsString } from "class-validator";
-import { newId } from "@v1/id";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
+import { IsOptional, IsString } from 'class-validator';
+import { newKey } from '@v1/id';
 export type ChatDocument = mongoose.HydratedDocument<Chat>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Chat {
   @Prop({ required: true })
   workspaceId: string;
 
-  @Prop({ required: true, default: "New Chat" })
+  @Prop({ required: true, default: 'New Chat' })
   name: string;
 
   @Prop({
     required: true,
     unique: true,
-    default: newId("chat", 6),
+    default: newKey({ prefix: 'c', byteLength: 10 }),
   })
   chatId: string;
 
@@ -28,14 +28,8 @@ export class Chat {
   // @Prop({ required: true })
   // description: string;
 
-  @Prop({ required: true, default: "You" })
-  owner: string;
-
-  @Prop({ required: true, default: () => new Date() })
-  createdAt: Date;
-
-  @Prop({ required: true, default: () => new Date() })
-  updatedAt: Date;
+  @Prop({ required: true })
+  ownerId: string;
 
   @Prop({})
   deletedAt: Date;
@@ -61,9 +55,8 @@ export class Chat {
   @Prop({ required: true, default: [] })
   isSharedWith: string[];
 
-
   @Prop({ required: true, default: false })
-  isSharedWithEveryone: boolean;
+  isSharedWithOrg: boolean;
 }
 
 export const ChatSchema = SchemaFactory.createForClass(Chat);
